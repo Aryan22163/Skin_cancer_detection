@@ -1,10 +1,10 @@
 # DermaScan – AI Skin Cancer & Lesion Detection System
 
-[![Accuracy](https://img.shields.io/badge/Model%20Accuracy-96.95%25-brightgreen.svg)](https://huggingface.co/Anwarkh1/Skin_Cancer-Image_Classification)
-[![Framework](https://img.shields.io/badge/Architecture-Vision%20Transformer%20(ViT--Base)-blue.svg)](https://arxiv.org/abs/2010.11929)
-[![Backend](https://img.shields.io/badge/Backend-Flask%20%2B%20PyTorch-orange.svg)](#local-development--setup)
-[![Frontend](https://img.shields.io/badge/Frontend-Modern%20Responsive%20Web-purple.svg)](#web-interface-features)
-[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black.svg)](#vercel-deployment)
+> 🚀 **Live Demo on Vercel**: **[https://skin-cancer-detection-alpha.vercel.app](https://skin-cancer-detection-alpha.vercel.app)**
+
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20on%20Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://skin-cancer-detection-alpha.vercel.app)
+[![Accuracy](https://img.shields.io/badge/Model%20Accuracy-96.95%25-brightgreen.svg?style=for-the-badge)](https://huggingface.co/Anwarkh1/Skin_Cancer-Image_Classification)
+[![Framework](https://img.shields.io/badge/Architecture-Vision%20Transformer%20(ViT--Base)-blue.svg?style=for-the-badge)](https://arxiv.org/abs/2010.11929)
 
 An automated dermatological classification system powered by a fine-tuned **Vision Transformer (ViT-Base Patch-16)** trained on dermatoscopic skin lesion images, achieving **96.95% validation accuracy**. DermaScan provides real-time diagnostic probabilities, clinical descriptions, risk severity categorization, and differential diagnosis breakdowns.
 
@@ -100,10 +100,12 @@ Open your browser and navigate to:
 
 ## Vercel Deployment
 
-This project includes a native `vercel.json` configuration and Vercel serverless functions in `/api`:
+- **Live Application**: [https://skin-cancer-detection-alpha.vercel.app](https://skin-cancer-detection-alpha.vercel.app)
+- **Model Info API**: [https://skin-cancer-detection-alpha.vercel.app/api/model_info](https://skin-cancer-detection-alpha.vercel.app/api/model_info)
+- **Predict API**: [https://skin-cancer-detection-alpha.vercel.app/api/predict](https://skin-cancer-detection-alpha.vercel.app/api/predict)
 
+Deploy updates to Vercel via CLI:
 ```bash
-# Deploy to Vercel via CLI
 npx vercel --prod
 ```
 
