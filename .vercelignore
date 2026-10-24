@@ -1,0 +1,14 @@
+.venv/
+skin_cancer_model.pkl
+skin_cancer_model.h5
+skin_cancer_model_trained.h5
+best_checkpoint.keras
+dataset/
+*.zip
+kaggle.json
+.DS_Store
+Skin_cancer_detection.ipynb
+Skin_cancer_detection_report.docx
+sample_images/
+train_model.py
+export_model_pkl.py

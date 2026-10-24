@@ -1,14 +1,12 @@
 {
   "version": 2,
+  "framework": null,
   "cleanUrls": true,
+  "outputDirectory": "skin_cancer_detection_frontend",
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/skin_cancer_detection_frontend/$1"
     }
   ]
 }
