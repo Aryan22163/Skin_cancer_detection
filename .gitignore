@@ -1,0 +1,42 @@
+# Python Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Large Machine Learning Models (>100MB rejected by GitHub)
+# Use `python export_model_pkl.py` to regenerate the model weights locally
+skin_cancer_model.pkl
+skin_cancer_model.h5
+skin_cancer_model_trained.h5
+best_checkpoint.keras
+
+# Datasets and Archives
+dataset/
+*.zip
+*.tar.gz
+
+# Local Credentials and Configs
+kaggle.json
+.env
+.env.local
+
+# Operating System & IDE
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+
+# Vercel Build Artifacts
+.vercel/

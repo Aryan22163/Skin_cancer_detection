@@ -1,40 +1,118 @@
-# Skin_cancer_detection
+# DermaScan – AI Skin Cancer & Lesion Detection System
+
+[![Accuracy](https://img.shields.io/badge/Model%20Accuracy-96.95%25-brightgreen.svg)](https://huggingface.co/Anwarkh1/Skin_Cancer-Image_Classification)
+[![Framework](https://img.shields.io/badge/Architecture-Vision%20Transformer%20(ViT--Base)-blue.svg)](https://arxiv.org/abs/2010.11929)
+[![Backend](https://img.shields.io/badge/Backend-Flask%20%2B%20PyTorch-orange.svg)](#local-development--setup)
+[![Frontend](https://img.shields.io/badge/Frontend-Modern%20Responsive%20Web-purple.svg)](#web-interface-features)
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black.svg)](#vercel-deployment)
+
+An automated dermatological classification system powered by a fine-tuned **Vision Transformer (ViT-Base Patch-16)** trained on dermatoscopic skin lesion images, achieving **96.95% validation accuracy**. DermaScan provides real-time diagnostic probabilities, clinical descriptions, risk severity categorization, and differential diagnosis breakdowns.
+
+---
 
 ## Abstract
-In cancer, there are over 200 different forms. Out of 200, melanoma is the deadliest form of skin cancer. The diagnostic procedure for melanoma starts with clinical screening, followed by dermoscopic analysis and histopathological examination. Melanoma skin cancer is highly curable if it gets identified at the early stages. The first step of Melanoma skin cancer diagnosis is to conduct a visual examination of the skin's affected area. Dermatologists take the dermatoscopic images of the skin lesions by the high-speed camera, which have an accuracy of 65-80% in the melanoma diagnosis without any additional technical support. With further visual examination by cancer treatment specialists and dermatoscopic images, the overall prediction rate of melanoma diagnosis raised to 75-84% accuracy. The project aims to build an automated classification system based on image processing techniques to classify skin cancer using skin lesions images.
+In cancer pathology, over 200 distinct forms exist. Among them, **melanoma** is the deadliest form of skin cancer. Clinical outcomes heavily depend on early detection: early-stage melanoma has a 99% 5-year survival rate, which sharply declines if diagnosis is delayed. 
 
-## Problem Statement
- In the skin biopsy, the dermatologist takes some part of the skin lesion and examines it under the microscope. The current process takes almost a week or more, starting from getting a dermatologist appointment to getting a biopsy report.
- The aims to shorten the current gap to just a couple of days by providing the predictive model.
- The approach uses Convolutional Neural Network (CNN) to classify nine types of skin cancer from outlier lesions images. This reduction of a gap has the opportunity to impact millions of people positively.
+Traditional dermatoscopic examination by clinicians yields 65–80% diagnostic accuracy without algorithmic assistance. With computer vision and deep transfer learning, AI classification systems achieve state-of-the-art predictive performance. This project bridges the clinical gap by providing an end-to-end classification pipeline and interactive web interface to evaluate dermatoscopic skin lesions.
 
-## Motivation
-The overarching goal is to support the efforts to reduce the death caused by skin cancer. The primary motivation that drives the project is to use the advanced image classification technology for the well-being of the people. Computer vision has made good progress in machine learning and deep learning that are scalable across domains.
+---
 
-## Dataset
-The dataset consists of 2357 images of malignant and benign oncological diseases, which were formed from the International Skin Imaging Collaboration (ISIC). All images were sorted according to the classification taken with ISIC, and all subsets were divided into the same number of images.
+## Diagnostic Classes Covered
 
-To overcome the issue of class imbalance, used a python package  Augmentor (https://augmentor.readthedocs.io/en/master/) to add more samples across all classes so that none of the classes have very few samples.
+DermaScan evaluates dermatoscopic images across the following categories:
 
+| Diagnostic Class | Clinical Type | Severity Level | Recommended Action |
+|:---|:---|:---|:---|
+| **Melanoma** | Malignant | High Risk | Urgent dermatological consultation & biopsy |
+| **Basal Cell Carcinoma** | Malignant | Moderate-High Risk | Dermatological evaluation for surgical excision |
+| **Actinic Keratosis** | Pre-Cancerous | Pre-Cancerous | Preventive dermatologist review to stop progression |
+| **Melanocytic Nevus (Mole)** | Benign | Benign (Harmless) | Routine self-checks with ABCDE criteria |
+| **Benign Keratosis (Seborrheic)** | Benign | Benign (Harmless) | No medical intervention required |
+| **Vascular Lesion** | Benign | Benign (Harmless) | Routine monitoring unless symptomatic |
+| **Dermatofibroma** | Benign | Benign (Harmless) | Harmless skin nodule; intervention rarely needed |
 
-## CNN Architecture Design
-To classify skin cancer using skin lesions images. To achieve higher accuracy and results on the classification task, I have built custom CNN model.
+---
 
-- Rescalling Layer - To rescale an input in the [0, 255] range to be in the [0, 1] range.
-- Convolutional Layer - Convolutional layers apply a convolution operation to the input, passing the result to the next layer. A convolution converts all the pixels in its receptive field into a single value. For example, if you would apply a convolution to an image, you will be decreasing the image size as well as bringing all the information in the field together into a single pixel. 
-- Pooling Layer - Pooling layers are used to reduce the dimensions of the feature maps. Thus, it reduces the number of parameters to learn and the amount of computation performed in the network. The pooling layer summarises the features present in a region of the feature map generated by a convolution layer.
-- Dropout Layer - The Dropout layer randomly sets input units to 0 with a frequency of rate at each step during training time, which helps prevent overfitting.
-- Flatten Layer - Flattening is converting the data into a 1-dimensional array for inputting it to the next layer. We flatten the output of the convolutional layers to create a single long feature vector. And it is connected to the final classification model, which is called a fully-connected layer.
-- Dense Layer - The dense layer is a neural network layer that is connected deeply, which means each neuron in the dense layer receives input from all neurons of its previous layer.
-- Activation Function(ReLU) - The rectified linear activation function or ReLU for short is a piecewise linear function that will output the input directly if it is positive, otherwise, it will output zero.The rectified linear activation function overcomes the vanishing gradient problem, allowing models to learn faster and perform better.
-- Activation Function(Softmax) - The softmax function is used as the activation function in the output layer of neural network models that predict a multinomial probability distribution. The main advantage of using Softmax is the output probabilities range. The range will 0 to 1, and the sum of all the probabilities will be equal to one.
+## System Architecture
 
-## References
+```mermaid
+graph LR
+    A["Dermatoscopic Image (224x224)"] --> B["ImageNet Normalization"]
+    B --> C["Vision Transformer (ViT-Base/16)"]
+    C --> D["Classification Head"]
+    D --> E["Softmax Probability Distribution"]
+    E --> F["Top Diagnostic Prediction"]
+    E --> G["Clinical Risk Level & Guidance"]
+    E --> H["Top-3 Differential Breakdown"]
+```
 
-Cancer dataset from  https://www.kaggle.com/datasets/jaiahuja/skin-cancer-detection
+- **Backbone**: Google Vision Transformer (`google/vit-base-patch16-224-in21k`)
+- **Fine-Tuning Dataset**: ISIC / HAM10000 Skin Lesion Archive (Marmal88 / ISIC)
+- **Validation Accuracy**: **96.95%**
+- **Inference Time**: < 200ms per lesion
+- **Serialization**: Python Pickle (`skin_cancer_model.pkl`) containing model weights, class descriptions, and clinical risk rules.
 
-Introduction to CNN from https://www.analyticsvidhya.com/blog/2021/05/convolutional-neural-networks-cnn/
+---
 
-Image classification using CNN from https://www.analyticsvidhya.com/blog/2020/02/learn-image-classification-cnn-convolutional-neural-networks-3-datasets/
+## Web Interface Features
 
-Efficient way to build CNN architecture from https://towardsdatascience.com/a-guide-to-an-efficient-way-to-build-neural-network-architectures-part-ii-hyper-parameter-42efca01e5d7
+- **Drag & Drop Upload**: Supports JPG, PNG, and WEBP dermatoscopic images up to 10 MB.
+- **One-Click Sample Test**: Instant test button with a benchmark melanoma dermatoscopy image (demonstrating 95.6% true confidence).
+- **Clinical Risk Banner**: Real-time risk assessment badges (High Risk, Moderate Risk, Pre-Cancerous, Benign) with suggested next steps.
+- **Differential Diagnosis Breakdown**: Top-3 ranked conditions with relative confidence progress bars.
+- **Responsive Design**: Clean, accessible layout optimized for desktop, tablet, and mobile browsers.
+
+---
+
+## Local Development & Setup
+
+### 1. Prerequisites
+- Python 3.10+
+- macOS, Linux, or Windows
+
+### 2. Clone the Repository
+```bash
+git clone https://github.com/Aryan22163/Skin_cancer_detection.git
+cd Skin_cancer_detection
+```
+
+### 3. Create a Virtual Environment & Install Dependencies
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 4. Export / Generate Model Weights (.pkl)
+Generate `skin_cancer_model.pkl` locally (automatically downloads verified fine-tuned ViT weights and runs self-verification):
+```bash
+python export_model_pkl.py
+```
+
+### 5. Launch the Local Application
+```bash
+python app.py
+```
+Open your browser and navigate to:
+**[http://localhost:8000](http://localhost:8000)**
+
+---
+
+## Vercel Deployment
+
+This project includes a native `vercel.json` configuration and Vercel serverless functions in `/api`:
+
+```bash
+# Deploy to Vercel via CLI
+npx vercel --prod
+```
+
+### Serverless Inference on Vercel:
+- **Demo Mode**: Out-of-the-box instant demonstration with benchmark test evaluation.
+- **Custom GPU / Flask Backend**: Configure the `BACKEND_URL` environment variable in your Vercel project dashboard to forward `/api/predict` requests to your hosted Flask GPU server (e.g., Render, Railway, or Hugging Face Spaces).
+- **Hugging Face Serverless Token**: Configure `HF_TOKEN` in Vercel to route directly to Hugging Face's serverless inference endpoints.
+
+---
+
+## Disclaimer
+> **IMPORTANT MEDICAL NOTICE**: DermaScan is developed strictly for educational and research purposes. AI model predictions do not constitute a clinical diagnosis. Always consult a board-certified dermatologist or qualified medical professional for skin evaluations and diagnosis.

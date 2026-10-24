@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Educational skin lesion image classification demo." />
+  <title>DermaScan | Skin Lesion Classifier</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="DermaScan home"><span class="brand-mark">✦</span> DermaScan</a>
+    <span class="top-note">ViT-Base · 96.95% Val Accuracy</span>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro">
+      <div class="eyebrow"><span class="pulse"></span> VISION TRANSFORMER · SKIN LESION CLASSIFICATION</div>
+      <h1>A closer look.<br /><span>Powered by AI.</span></h1>
+      <p class="intro-copy">Upload a dermatoscopic skin lesion image to run inference against the fine-tuned Vision Transformer classifier (96.95% benchmark validation accuracy).</p>
+      <div class="trust-row">
+        <span>◎ ViT-Base Architecture</span><span>⌁ 7 Diagnostic Classes</span><span>♧ 96.95% Accuracy</span>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Skin lesion image classifier">
+      <div class="panel upload-panel">
+        <div class="panel-heading">
+          <div><p class="step-label">STEP 01</p><h2>Upload an image</h2></div>
+          <span class="optional">JPG · PNG · WEBP</span>
+        </div>
+        <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+        <div id="dropZone" class="drop-zone" role="button" tabindex="0" aria-label="Choose or drop an image">
+          <div id="uploadPlaceholder" class="upload-placeholder">
+            <div class="upload-icon">↑</div>
+            <h3>Drop your image here</h3>
+            <p>or <button id="browseButton" class="text-button" type="button">browse files</button></p>
+            <small>Use a clear, well-lit dermatoscopic image.</small>
+          </div>
+          <div id="previewWrap" class="preview-wrap hidden">
+            <img id="imagePreview" alt="Selected skin lesion preview" />
+            <button id="removeImage" class="remove-button" type="button" aria-label="Remove image">×</button>
+            <span id="fileName" class="file-name"></span>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <button id="sampleMelanomaBtn" type="button" class="sample-btn">
+            <span>🔬</span> Test Sample Melanoma Image
+          </button>
+        </div>
+        <div class="privacy-note"><span>⌑</span><p><strong>Before you upload</strong><br />Use images you have permission to process. This front end does not store images itself.</p></div>
+        <button id="analyzeButton" class="primary-button" type="button" disabled><span>Analyze image</span><span>↗</span></button>
+        <p id="statusMessage" class="status-message" role="status" aria-live="polite">Choose an image to begin.</p>
+      </div>
+
+      <div class="panel result-panel">
+        <div class="panel-heading">
+          <div><p class="step-label">STEP 02</p><h2>Model output</h2></div>
+          <span class="result-badge"><span class="badge-dot"></span> Awaiting image</span>
+        </div>
+        <div id="emptyResult" class="empty-result">
+          <div class="scan-art" aria-hidden="true"><div class="scan-circle"><span>✳</span></div><div class="scan-line"></div></div>
+          <h3>Your result will appear here</h3>
+          <p>After connecting your trained model API, the predicted class and confidence score will show in this panel.</p>
+          <div class="skeleton"><span></span><span></span></div>
+        </div>
+        <div id="resultContent" class="result-content hidden">
+          <p class="result-overline">PREDICTED CLASS</p>
+          <h3 id="predictionLabel">—</h3>
+          <div class="confidence-row"><span>Model confidence</span><strong id="confidenceValue">—</strong></div>
+          <div class="confidence-track"><div id="confidenceBar" class="confidence-fill"></div></div>
+          <p id="resultExplanation" class="result-explanation">This is a model output and should not be treated as a clinical conclusion.</p>
+          <button id="resetButton" class="secondary-button" type="button">Analyze another image</button>
+        </div>
+        <div class="disclaimer"><span>!</span><p><strong>Important health notice</strong><br />This project is for educational/research use only. AI predictions can be wrong and cannot confirm or rule out skin cancer. Consult a qualified dermatologist for medical concerns.</p></div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <p class="step-label">THE WORKFLOW</p>
+      <div class="workflow-grid">
+        <div><span class="workflow-number">01</span><h3>Upload</h3><p>Select a supported skin image.</p></div>
+        <div><span class="workflow-number">02</span><h3>Inference</h3><p>The backend preprocesses the image and runs your trained model.</p></div>
+        <div><span class="workflow-number">03</span><h3>Review</h3><p>View the model output alongside the medical-use disclaimer.</p></div>
+      </div>
+    </section>
+    <footer><span>DermaScan · Student AI project</span><span>Not for clinical use</span></footer>
+  </main>
+</body>
+</html>
