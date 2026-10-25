@@ -85,18 +85,28 @@ export default async function handler(req, res) {
     }
     const buffer = Buffer.concat(chunks);
 
-    // Option 1: If BACKEND_URL is configured (e.g. self-hosted Flask instance), proxy directly
-    if (process.env.BACKEND_URL) {
-      const backendUrl = `${process.env.BACKEND_URL.replace(/\/+$/, "")}/api/predict`;
-      const backendResp = await fetch(backendUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": req.headers["content-type"],
-        },
-        body: buffer,
-      });
-      const data = await backendResp.json();
-      return res.status(backendResp.status).json(data);
+    const BACKEND_URL = process.env.BACKEND_URL || "https://chambers-immunology-emission-angel.trycloudflare.com";
+
+    // Primary: Forward to the live model backend running the fine-tuned ViT model
+    if (BACKEND_URL) {
+      try {
+        const backendUrl = `${BACKEND_URL.replace(/\/+$/, "")}/api/predict`;
+        const backendResp = await fetch(backendUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": req.headers["content-type"] || "multipart/form-data",
+          },
+          body: buffer,
+        });
+        if (backendResp.ok) {
+          const data = await backendResp.json();
+          return res.status(backendResp.status).json(data);
+        } else {
+          console.warn("Backend returned non-ok status:", backendResp.status);
+        }
+      } catch (proxyErr) {
+        console.error("Error proxying to backend:", proxyErr);
+      }
     }
 
     // Option 2: If HF_TOKEN is configured, query the Hugging Face Inference API
